@@ -1,13 +1,13 @@
-import { Link, Stack } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import {Link, Stack} from 'expo-router';
+import {StyleSheet, View} from 'react-native';
 
-import { Text } from "@rneui/themed";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {Text} from '@rneui/themed';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 export default function NotFoundScreen() {
   return (
     <SafeAreaView>
-      <Stack.Screen options={{ title: "Oops!" }} />
+      <Stack.Screen options={{title: 'Oops!'}} />
       <View style={styles.container}>
         <Text>This screen doesn't exist.</Text>
         <Link href="/" style={styles.link}>
@@ -21,8 +21,8 @@ export default function NotFoundScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     padding: 20,
   },
   link: {

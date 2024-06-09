@@ -1,21 +1,21 @@
-import { createTheme } from "@rneui/themed";
+import {createTheme} from '@rneui/themed';
 
 export const theme = createTheme({
-  mode: "dark",
+  mode: 'dark',
   darkColors: {
-    primary: "#201E27",
-    secondary: "#444055",
-    tertiary: "#514C66",
-    textPrimary: "#F2F2F2",
-    textSecondary: "#C7C5D6",
-    violetAccent: "#7C63DD",
-    violetLight: "#967DFA",
-    detail: "#FFBD20",
-    success: "#27AE60",
-    error: "#DB2121",
-    shadowPrimary: "#f2f2f2bf",
-    shadowSecondary: "#00000080",
-    shadowWhite: "#d7d7d70d",
+    primary: '#201E27',
+    secondary: '#444055',
+    tertiary: '#514C66',
+    textPrimary: '#F2F2F2',
+    textSecondary: '#C7C5D6',
+    violetAccent: '#7C63DD',
+    violetLight: '#967DFA',
+    detail: '#FFBD20',
+    success: '#27AE60',
+    error: '#DB2121',
+    shadowPrimary: '#f2f2f2bf',
+    shadowSecondary: '#00000080',
+    shadowWhite: '#d7d7d70d',
   },
   components: {
     Text: (props, theme) => {
@@ -26,7 +26,7 @@ export const theme = createTheme({
       };
     },
     Button: (props, theme) => {
-      if (props.type === "clear") {
+      if (props.type === 'clear') {
         return {
           radius: 10,
           buttonStyle: {
@@ -51,10 +51,10 @@ export const theme = createTheme({
           fontSize: 14,
         },
         disabledStyle: {
-          backgroundColor: "#372F54",
+          backgroundColor: '#372F54',
         },
         disabledTitleStyle: {
-          color: "#655F7C",
+          color: '#655F7C',
         },
       };
     },

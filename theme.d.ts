@@ -1,6 +1,6 @@
-import "@rneui/themed";
+import '@rneui/themed';
 
-declare module "@rneui/themed" {
+declare module '@rneui/themed' {
   export interface Colors {
     tertiary: string;
     textPrimary: string;
