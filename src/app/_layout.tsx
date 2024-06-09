@@ -7,9 +7,12 @@ import MainStack from '@/navigation/MainStack';
 import {theme} from '@/theme';
 import {ThemeProvider} from '@rneui/themed';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+const queryClient = new QueryClient();
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -28,9 +31,11 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider theme={theme}>
-      <SafeAreaProvider>
-        <MainStack />
-      </SafeAreaProvider>
+      <QueryClientProvider client={queryClient}>
+        <SafeAreaProvider>
+          <MainStack />
+        </SafeAreaProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }
