@@ -5,6 +5,7 @@ import {Text} from '@rneui/themed';
 import {format} from 'date-fns';
 import React from 'react';
 import {View} from 'react-native';
+import InvoiceStatus, {InvoiceStatusProps} from './InvoiceStatus';
 
 interface InvoiceListItemProps {
   invoice: Invoice;
@@ -25,7 +26,7 @@ const InvoiceListItem = ({invoice}: InvoiceListItemProps) => {
           <Text style={styles.amount}>{formatPrice(invoice.amount)}</Text>
         </View>
         <View>
-          <Text>{invoice.status}</Text>
+          <InvoiceStatus status={invoice.status as InvoiceStatusProps['status']} />
         </View>
       </View>
     </View>
