@@ -1,11 +1,12 @@
 import {Invoice} from '@/common/models/Invoice';
 import {formatPrice} from '@/lib/utils/formatPrice';
-import {makeStyles} from '@rneui/themed';
+import {Button, makeStyles} from '@rneui/themed';
 import {Text} from '@rneui/themed';
 import {format} from 'date-fns';
 import React from 'react';
 import {View} from 'react-native';
 import InvoiceStatus, {InvoiceStatusProps} from './InvoiceStatus';
+import {useNavigation, useRouter} from 'expo-router';
 
 interface InvoiceListItemProps {
   invoice: Invoice;
@@ -13,6 +14,11 @@ interface InvoiceListItemProps {
 
 const InvoiceListItem = ({invoice}: InvoiceListItemProps) => {
   const styles = useStyles();
+  const router = useRouter();
+
+  const handleViewMore = () => {
+    router.push(`/invoices/${invoice.id}`);
+  };
 
   return (
     <View style={styles.container}>
@@ -28,6 +34,9 @@ const InvoiceListItem = ({invoice}: InvoiceListItemProps) => {
         <View>
           <InvoiceStatus status={invoice.status as InvoiceStatusProps['status']} />
         </View>
+      </View>
+      <View style={styles.actionContainer}>
+        <Button onPress={handleViewMore}>View more</Button>
       </View>
     </View>
   );
@@ -62,6 +71,9 @@ const useStyles = makeStyles((theme) => ({
   amount: {
     fontWeight: '600',
     fontSize: 18,
+  },
+  actionContainer: {
+    marginTop: 15,
   },
 }));
 
