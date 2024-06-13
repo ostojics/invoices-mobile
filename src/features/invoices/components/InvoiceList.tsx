@@ -4,7 +4,8 @@ import {useQuery} from '@tanstack/react-query';
 import React from 'react';
 import {FlatList, View} from 'react-native';
 import InvoiceListItem from './InvoiceListItem';
-import {makeStyles} from '@rneui/base';
+import {makeStyles} from '@rneui/themed';
+import {Link} from 'expo-router';
 
 const InvoiceList = () => {
   const {data, isLoading, isError} = useQuery({
@@ -13,6 +14,7 @@ const InvoiceList = () => {
     staleTime: 1000 * 60 * 1,
   });
   const styles = useStyles();
+  const isEmpty = data?.data?.length === 0;
 
   if (isLoading) {
     return (
@@ -32,11 +34,15 @@ const InvoiceList = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={data?.data ?? []}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={(item) => <InvoiceListItem invoice={item.item} />}
-      />
+      {isEmpty && (
+        <View style={styles.zeroStateContainer}>
+          <Text>No invoices found</Text>
+          <Link style={styles.zeroStateLink} href="/add-invoice">
+            Create new invoice
+          </Link>
+        </View>
+      )}
+      {!isEmpty && <FlatList data={data?.data ?? []} renderItem={({item}) => <InvoiceListItem invoice={item} />} />}
     </View>
   );
 };
@@ -44,6 +50,18 @@ const InvoiceList = () => {
 const useStyles = makeStyles((theme) => ({
   container: {
     padding: 20,
+  },
+  zeroStateContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '50%',
+  },
+  zeroStateLink: {
+    marginTop: 10,
+    color: theme.colors.textPrimary,
+    backgroundColor: theme.colors.tertiary,
+    padding: 10,
+    borderRadius: 8,
   },
 }));
 
