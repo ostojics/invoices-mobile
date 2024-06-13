@@ -1,10 +1,10 @@
-import {Text} from '@rneui/themed';
+import InvoiceList from '@/features/invoices/components/InvoiceList';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
   return (
     <SafeAreaView>
-      <Text>Hello!!</Text>
+      <InvoiceList />
     </SafeAreaView>
   );
 }
