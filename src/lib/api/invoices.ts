@@ -9,3 +9,7 @@ export const getInvoices = (): Promise<AxiosResponse<Array<Invoice>>> => {
 export const getInvoiceById = (invoiceId: string): Promise<AxiosResponse<Invoice>> => {
   return httpClient.get(`/invoices/${invoiceId}`);
 };
+
+export const markInvoiceAsPaid = (invoiceId: number): Promise<AxiosResponse<Invoice>> => {
+  return httpClient.put(`/invoices/${invoiceId}/paid`);
+};

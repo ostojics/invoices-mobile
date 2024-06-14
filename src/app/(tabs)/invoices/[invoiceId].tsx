@@ -1,3 +1,4 @@
+import {useMarkInvoiceAsPaid} from '@/features/invoices/hooks/useMarkInvoiceAsPaid';
 import {getInvoiceById} from '@/lib/api/invoices';
 import {formatPrice} from '@/lib/utils/formatPrice';
 import {isOverdue} from '@/lib/utils/isOverdue';
@@ -17,10 +18,20 @@ const InvoiceDetails = () => {
   const styles = useStyles();
   const invoice = data?.data;
 
+  const mutation = useMarkInvoiceAsPaid();
+
   const formatDate = (isoDate: string) => {
     const parsedDate = parseISO(isoDate);
     return format(parsedDate, 'dd/MM/yyyy');
   };
+
+  const handleMarkAsPaid = () => {
+    if (!invoice?.id) return;
+
+    mutation.mutate(invoice.id);
+  };
+
+  console.log(invoice);
 
   return (
     <View style={styles.container}>
@@ -37,9 +48,9 @@ const InvoiceDetails = () => {
         {invoice?.dueDate && <Text style={styles.detailsText}>Due {formatDate(invoice?.dueDate)}</Text>}
       </View>
       <View style={styles.action}>
-        <Button>Mark as paid</Button>
-        {invoice?.dueDate && (
-          <Text style={styles.dueText}>This invoice is {isOverdue(invoice.dueDate) ? 'overdue' : 'not overdue'}</Text>
+        {invoice?.status === 'Pending' && <Button onPress={handleMarkAsPaid}>Mark as paid</Button>}
+        {isOverdue(invoice?.dueDate ?? '') && invoice?.status === 'Pending' && (
+          <Text style={styles.dueText}>This invoice is overdue</Text>
         )}
       </View>
     </View>
