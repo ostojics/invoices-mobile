@@ -13,3 +13,7 @@ export const getInvoiceById = (invoiceId: string): Promise<AxiosResponse<Invoice
 export const markInvoiceAsPaid = (invoiceId: number): Promise<AxiosResponse<Invoice>> => {
   return httpClient.put(`/invoices/${invoiceId}/paid`);
 };
+
+export const deleteInvoice = (invoiceId: number): Promise<AxiosResponse<Invoice>> => {
+  return httpClient.delete(`/invoices/${invoiceId}`);
+};

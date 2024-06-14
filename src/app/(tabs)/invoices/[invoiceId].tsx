@@ -1,3 +1,4 @@
+import {useDeleteInvoice} from '@/features/invoices/hooks/useDeleteInvoice';
 import {useMarkInvoiceAsPaid} from '@/features/invoices/hooks/useMarkInvoiceAsPaid';
 import {getInvoiceById} from '@/lib/api/invoices';
 import {formatPrice} from '@/lib/utils/formatPrice';
@@ -18,7 +19,8 @@ const InvoiceDetails = () => {
   const styles = useStyles();
   const invoice = data?.data;
 
-  const mutation = useMarkInvoiceAsPaid();
+  const markAsPaidMutation = useMarkInvoiceAsPaid();
+  const deleteInvoiceMutation = useDeleteInvoice();
 
   const formatDate = (isoDate: string) => {
     const parsedDate = parseISO(isoDate);
@@ -28,10 +30,14 @@ const InvoiceDetails = () => {
   const handleMarkAsPaid = () => {
     if (!invoice?.id) return;
 
-    mutation.mutate(invoice.id);
+    markAsPaidMutation.mutate(invoice.id);
   };
 
-  console.log(invoice);
+  const handleDelete = () => {
+    if (!invoice?.id) return;
+
+    deleteInvoiceMutation.mutate(invoice.id);
+  };
 
   return (
     <View style={styles.container}>
@@ -52,6 +58,11 @@ const InvoiceDetails = () => {
         {isOverdue(invoice?.dueDate ?? '') && invoice?.status === 'Pending' && (
           <Text style={styles.dueText}>This invoice is overdue</Text>
         )}
+      </View>
+      <View style={styles.delete}>
+        <Button onPress={handleDelete} buttonStyle={styles.deleteBtn}>
+          Delete invoice
+        </Button>
       </View>
     </View>
   );
@@ -100,6 +111,13 @@ const useStyles = makeStyles((theme) => ({
   dueText: {
     fontSize: 14,
     color: theme.colors.violetAccent,
+  },
+  delete: {
+    marginTop: 30,
+    width: '100%',
+  },
+  deleteBtn: {
+    backgroundColor: theme.colors.error,
   },
 }));
 
