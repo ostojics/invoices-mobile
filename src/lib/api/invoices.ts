@@ -6,6 +6,6 @@ export const getInvoices = (): Promise<AxiosResponse<Array<Invoice>>> => {
   return httpClient.get('/invoices');
 };
 
-export const getInvoiceById = (invoiceId: string) => {
+export const getInvoiceById = (invoiceId: string): Promise<AxiosResponse<Invoice>> => {
   return httpClient.get(`/invoices/${invoiceId}`);
-}
+};
