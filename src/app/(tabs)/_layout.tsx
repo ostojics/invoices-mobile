@@ -18,7 +18,7 @@ export default function TabLayout() {
       sceneContainerStyle={{backgroundColor: theme.colors.primary}}
     >
       <Tabs.Screen
-        name="index"
+        name="invoices"
         options={{
           title: 'Home',
           tabBarIcon: ({color, focused}) => <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />,

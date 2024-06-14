@@ -10,9 +10,10 @@ const MainStack = () => {
       screenOptions={{
         contentStyle: {backgroundColor: theme.colors.primary},
         statusBarColor: theme.colors.secondary,
+        headerShown: false,
       }}
     >
-      <Stack.Screen name="(tabs)" options={{headerShown: false}} />
+      <Stack.Screen name="(tabs)" />
       <Stack.Screen name="+not-found" />
     </Stack>
   );
