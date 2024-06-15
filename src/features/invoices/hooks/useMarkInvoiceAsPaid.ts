@@ -1,4 +1,5 @@
 import {markInvoiceAsPaid} from '@/lib/api/invoices';
+import {toast} from '@/lib/utils/toast';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {useRouter} from 'expo-router';
 
@@ -9,6 +10,11 @@ export const useMarkInvoiceAsPaid = () => {
   return useMutation({
     mutationFn: markInvoiceAsPaid,
     onSuccess: (resp) => {
+      toast({
+        type: 'success',
+        text1: 'Invoice updated',
+        text2: 'Invoice marked as paid',
+      });
       client.invalidateQueries({
         queryKey: ['invoices'],
       });
@@ -18,7 +24,11 @@ export const useMarkInvoiceAsPaid = () => {
       router.push('/invoices');
     },
     onError: () => {
-      // TODO - error toast
+      toast({
+        type: 'error',
+        text1: 'Failed to update invoice',
+        text2: 'There was an unexpected error',
+      });
     },
   });
 };

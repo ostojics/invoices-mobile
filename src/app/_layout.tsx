@@ -6,8 +6,9 @@ import 'react-native-reanimated';
 import MainStack from '@/navigation/MainStack';
 import {theme} from '@/theme';
 import {ThemeProvider} from '@rneui/themed';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -40,6 +41,7 @@ export default function RootLayout() {
       <QueryClientProvider client={queryClient}>
         <SafeAreaProvider>
           <MainStack />
+          <Toast />
         </SafeAreaProvider>
       </QueryClientProvider>
     </ThemeProvider>
