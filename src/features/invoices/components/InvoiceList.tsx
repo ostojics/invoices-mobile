@@ -1,17 +1,16 @@
 import {getInvoices} from '@/lib/api/invoices';
-import {Text} from '@rneui/themed';
+import {Text, makeStyles} from '@rneui/themed';
 import {useQuery} from '@tanstack/react-query';
+import {Link} from 'expo-router';
 import React from 'react';
 import {FlatList, View} from 'react-native';
 import InvoiceListItem from './InvoiceListItem';
-import {makeStyles} from '@rneui/themed';
-import {Link} from 'expo-router';
 
 const InvoiceList = () => {
   const {data, isLoading, isError} = useQuery({
     queryFn: getInvoices,
     queryKey: ['invoices'],
-    staleTime: 1000 * 60 * 1,
+    staleTime: 1000 * 60,
   });
   const styles = useStyles();
   const isEmpty = data?.data?.length === 0;
