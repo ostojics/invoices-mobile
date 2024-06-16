@@ -1,4 +1,4 @@
-import {InferType, number, object, string} from 'yup';
+import {InferType, object, string} from 'yup';
 
 export const createInvoiceSchema = object({
   name: string().required('Name is required'),

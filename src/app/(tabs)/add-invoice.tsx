@@ -2,9 +2,10 @@ import {CreateInvoiceFormData} from '@/common/dto/CreateInvoiceDTO';
 import FormError from '@/components/FormError';
 import FormGroup from '@/components/FormGroup';
 import {useValidateCreateInvoice} from '@/features/invoices/hooks/useValidateCreateInvoice';
-import {Button, Input} from '@rneui/themed';
+import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
+import {Button, Input, Text} from '@rneui/themed';
 import {Controller} from 'react-hook-form';
-import {ScrollView} from 'react-native';
+import {ScrollView, View} from 'react-native';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
 
@@ -13,7 +14,24 @@ export default function AddInvoice() {
     control,
     formState: {errors},
     handleSubmit,
+    setValue,
+    watch,
   } = useValidateCreateInvoice();
+
+  const dateWatcher = watch('dueDate');
+
+  const showDatepicker = () => {
+    DateTimePickerAndroid.open({
+      value: new Date(dateWatcher),
+      onChange: (_, selectedDate) => {
+        if (!selectedDate) return;
+
+        setValue('dueDate', selectedDate.toISOString());
+      },
+      mode: 'date',
+      is24Hour: true,
+    });
+  };
 
   const onSubmit = (data: CreateInvoiceFormData) => {
     console.log('Submit data', data);
@@ -107,6 +125,10 @@ export default function AddInvoice() {
             {errors.amount && <FormError errorMsg={errors.amount?.message ?? 'Invalid amount'} />}
           </>
         </FormGroup>
+        <View style={{marginBottom: 30}}>
+          <Text style={{marginBottom: 7}}>selected: {new Date(dateWatcher).toLocaleDateString('sr')}</Text>
+          <Button onPress={() => showDatepicker()}>Set due date</Button>
+        </View>
         <Button onPress={handleSubmit(onSubmit)}>Submit</Button>
       </ScrollView>
     </SafeAreaView>

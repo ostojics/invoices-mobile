@@ -12,8 +12,8 @@ export const useValidateCreateInvoice = () => {
       email: '',
       description: '',
       address: '',
-      amount: 0,
-      dueDate: '',
+      amount: '0',
+      dueDate: new Date().toISOString(),
     },
   });
 };
