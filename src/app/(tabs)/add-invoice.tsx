@@ -1,9 +1,13 @@
 import {CreateInvoiceFormData} from '@/common/dto/CreateInvoiceDTO';
 import FormError from '@/components/FormError';
 import FormGroup from '@/components/FormGroup';
+import {useCreateInvoice} from '@/features/invoices/hooks/useCreateInvoice';
 import {useValidateCreateInvoice} from '@/features/invoices/hooks/useValidateCreateInvoice';
+import {getCurrentUser} from '@/lib/api/users';
+import {toast} from '@/lib/utils/toast';
 import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 import {Button, Input, Text} from '@rneui/themed';
+import {useQuery} from '@tanstack/react-query';
 import {Controller} from 'react-hook-form';
 import {ScrollView, View} from 'react-native';
 
@@ -16,9 +20,16 @@ export default function AddInvoice() {
     handleSubmit,
     setValue,
     watch,
+    reset,
   } = useValidateCreateInvoice();
+  const mutation = useCreateInvoice({reset});
 
   const dateWatcher = watch('dueDate');
+
+  const {data, isError} = useQuery({
+    queryFn: getCurrentUser,
+    queryKey: ['current-user'],
+  });
 
   const showDatepicker = () => {
     DateTimePickerAndroid.open({
@@ -33,8 +44,18 @@ export default function AddInvoice() {
     });
   };
 
-  const onSubmit = (data: CreateInvoiceFormData) => {
-    console.log('Submit data', data);
+  const onSubmit = (formData: CreateInvoiceFormData) => {
+    if (isError) {
+      toast({
+        type: 'error',
+        text1: 'Unable to create a new invoice',
+        text2: 'Please try again later',
+      });
+    }
+
+    if (!data?.data) return;
+
+    mutation.mutate({formData, userData: data.data});
   };
 
   return (
