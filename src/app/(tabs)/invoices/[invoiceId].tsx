@@ -6,7 +6,7 @@ import {isOverdue} from '@/lib/utils/isOverdue';
 import {Button, Text, makeStyles} from '@rneui/themed';
 import {useQuery} from '@tanstack/react-query';
 import {format, parseISO} from 'date-fns';
-import {useLocalSearchParams} from 'expo-router';
+import {useLocalSearchParams, useRouter} from 'expo-router';
 import React from 'react';
 import {View} from 'react-native';
 
@@ -17,6 +17,7 @@ const InvoiceDetails = () => {
     queryKey: ['invoice', invoiceId],
   });
   const styles = useStyles();
+  const router = useRouter();
   const invoice = data?.data;
 
   const markAsPaidMutation = useMarkInvoiceAsPaid();
@@ -41,6 +42,11 @@ const InvoiceDetails = () => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.back}>
+        <Button type="clear" onPress={() => router.back()} buttonStyle={{paddingHorizontal: 20, paddingVertical: 10}}>
+          {'<'}
+        </Button>
+      </View>
       <View style={styles.heading}>
         <Text style={styles.headingText}>#{invoice?.id}</Text>
         <Text style={styles.headingText}>{formatPrice(invoice?.amount ?? 0)}</Text>
@@ -118,6 +124,12 @@ const useStyles = makeStyles((theme) => ({
   },
   deleteBtn: {
     backgroundColor: theme.colors.error,
+  },
+  back: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    width: '100%',
+    marginBottom: 20,
   },
 }));
 
