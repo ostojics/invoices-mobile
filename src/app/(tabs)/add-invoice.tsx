@@ -150,7 +150,9 @@ export default function AddInvoice() {
           <Text style={{marginBottom: 7}}>selected: {new Date(dateWatcher).toLocaleDateString('sr')}</Text>
           <Button onPress={() => showDatepicker()}>Set due date</Button>
         </View>
-        <Button onPress={handleSubmit(onSubmit)}>Submit</Button>
+        <Button onPress={handleSubmit(onSubmit)} disabled={mutation.isPending}>
+          {mutation.isPending ? 'Creating invoice...' : 'Submit'}
+        </Button>
       </ScrollView>
     </SafeAreaView>
   );
