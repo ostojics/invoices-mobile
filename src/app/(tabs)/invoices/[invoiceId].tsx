@@ -60,14 +60,18 @@ const InvoiceDetails = () => {
         {invoice?.dueDate && <Text style={styles.detailsText}>Due {formatDate(invoice?.dueDate)}</Text>}
       </View>
       <View style={styles.action}>
-        {invoice?.status === 'Pending' && <Button onPress={handleMarkAsPaid}>Mark as paid</Button>}
+        {invoice?.status === 'Pending' && (
+          <Button onPress={handleMarkAsPaid} disabled={markAsPaidMutation.isPending}>
+            {markAsPaidMutation.isPending ? 'Updating...' : 'Mark as paid'}
+          </Button>
+        )}
         {isOverdue(invoice?.dueDate ?? '') && invoice?.status === 'Pending' && (
           <Text style={styles.dueText}>This invoice is overdue</Text>
         )}
       </View>
       <View style={styles.delete}>
-        <Button onPress={handleDelete} buttonStyle={styles.deleteBtn}>
-          Delete invoice
+        <Button onPress={handleDelete} buttonStyle={styles.deleteBtn} disabled={deleteInvoiceMutation.isPending}>
+          {deleteInvoiceMutation.isPending ? 'Deleting...' : 'Delete'}
         </Button>
       </View>
     </View>
